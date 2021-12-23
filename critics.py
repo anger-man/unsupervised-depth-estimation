@@ -41,7 +41,7 @@ def define_dcgan(in_image,inp_dim,f,norm,k = 4,alpha=0.2):
     # batchnormalization in generator and discriminator
     # no fully connected layers for deep architectures
 
-    in_scaled = Lambda(Scale)(in_image)
+    in_scaled = in_image
 
     d = Conv2D(f, (k,k), strides=(2,2), padding='same',kernel_initializer='he_normal')(in_scaled)
     if norm:
@@ -94,7 +94,7 @@ def define_patchgan(in_image,inp_dim,f,norm,k = 4,alpha=0.2):
     # batchnormalization in generator and discriminator
     # no fully connected layers for deep architectures
 
-    in_scaled = Lambda(Scale)(in_image)
+    in_scaled =in_image
     d = Conv2D(f, (k,k), strides=(2,2), padding='same',kernel_initializer='he_normal')(in_scaled)
     if norm:
         d = GroupNormalization(groups = min(f,norm), scale=False)(d)
