@@ -17,6 +17,6 @@ conda activate tf_2.2.0
 Model architectures and training parameters can be set in **config_file.ini**.
 Then:
 ```
-python train.py --direc path_to_projet_folder
+python train.py --direc path_to_project_folder
 ```
 
