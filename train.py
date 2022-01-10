@@ -178,7 +178,7 @@ if 'results.csv' not in files:
     
 table = pd.DataFrame(np.array([arch_c,arch_g,fc,fg,lrc,lrg,normc,normg,lam,
                     p,nc,loss_feat.__name__,new_loss,
-                    0,0,'']).reshape(1,16),
+                    0.,0.,'']).reshape(1,16),
     columns=['critic','generator','f_critic','f_generator',
              'lr_critic','lr_generator','norm_critic','norm_generator',
              'reconstuction','penalty','num_cri','imagespace_loss',
@@ -290,11 +290,6 @@ diamD = .2* np.sqrt(np.sum(np.square(np.ones(out_dim)))) #*10
 
         
 
-if arch_g == 'unet':
-    generator_CtoD=define_unet(inp_dim,out_dim, out_act = out_act,
-                                norm=normg,f=fg)
-    generator_DtoC=define_unet(out_dim,inp_dim, out_act = in_act,
-                                norm=normg,f=fg)
 
 if arch_g == 'resnet18':
     generator_CtoD=define_resnet18(inp_dim,out_dim, out_act = out_act,
@@ -302,10 +297,16 @@ if arch_g == 'resnet18':
     generator_DtoC=define_resnet18(out_dim,inp_dim, out_act = in_act,
                                 norm=normg,f=fg)
     
-if arch_g == 'styletransfer':
+elif arch_g == 'styletransfer':
     generator_CtoD=define_styletransfer(inp_dim,out_dim, out_act = out_act,
                                 norm=normg,f=fg)
     generator_DtoC=define_styletransfer(out_dim,inp_dim, out_act = in_act,
+                                norm=normg,f=fg)
+    
+else:
+    generator_CtoD=define_unet(inp_dim,out_dim, out_act = out_act,
+                                norm=normg,f=fg)
+    generator_DtoC=define_unet(out_dim,inp_dim, out_act = in_act,
                                 norm=normg,f=fg)
     
 
@@ -314,20 +315,21 @@ generator_CtoD.summary()
 
 
 in_image = Input(shape=inp_dim)
-if arch_c == 'dcgan':
-    discriminator_C = define_dcgan(in_image,inp_dim, norm = normc, f=fc)
+
 if arch_c == 'patchgan':
     discriminator_C = define_patchgan(in_image,inp_dim, norm = normc, f=fc)
+else:
+    discriminator_C = define_dcgan(in_image,inp_dim, norm = normc, f=fc)
 features = discriminator_C.layers[-3].output
 fe_C = Model(in_image, features)
 critic_C = define_critic_with_gp(discriminator_C,inp_dim,p, 
                                  diam = diamC, lrc = lrc)
 
 in_image = Input(shape=out_dim)
-if arch_c == 'dcgan':
-    discriminator_D = define_dcgan(in_image,out_dim, norm = normc, f=fc)
 if arch_c == 'patchgan':
     discriminator_D = define_patchgan(in_image,out_dim, norm = normc, f=fc)
+else:
+    discriminator_D = define_dcgan(in_image,out_dim, norm = normc, f=fc)
 features = discriminator_D.layers[-3].output
 fe_D = Model(in_image, features)
 critic_D = define_critic_with_gp(discriminator_D,out_dim,p, 
@@ -463,7 +465,7 @@ for i in np.arange(0,steps,1):
         DIF1.append(dif1); DIF2.append(dif2)
         plt.figure()
         plt.plot(DIF1); plt.plot(DIF2)
-        plt.title(str('%.3f,  %.3f' %(np.min(DIF1),np.max(DIF2))))
+        plt.title(str('%.3f,  %.3f' %(np.min(DIF1),np.min(DIF2))))
         plt.savefig( 'metrics/%s.pdf' %(name+'fi'),dpi=300)
         
 
