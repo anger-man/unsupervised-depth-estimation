@@ -3,7 +3,7 @@ Unsupervised single-shot depth estimation with perceptual reconstruction loss
 
 Implementation of a framework for fully unsupervised single-view depth estimation as proposed in:
 
-Preprint version: (https://arxiv.org/abs/2103.16938)
+Preprint version: xxx
 
 ## Installation
 
