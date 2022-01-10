@@ -2,7 +2,7 @@
 """
 Created on Wed Mar 17 09:41:17 2021
 
-@author: Christoph Angermann
+@author: c
 """
 
 #%%
