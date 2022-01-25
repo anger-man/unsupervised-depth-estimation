@@ -39,4 +39,7 @@ RGB images should be given in .jpg-format with dimension **dxdx3**, where the po
 |----image_index2.jpg
 |----depth_index2.npy
 ```
+The directory *face_depth* gives an example of the needed structure of the project folder. It contains pre-processed samples taken from the **Texas 3D Face Recognition** database (https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=5483908).
+
+
 
