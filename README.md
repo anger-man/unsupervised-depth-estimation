@@ -3,7 +3,7 @@ Unsupervised single-shot depth estimation with perceptual reconstruction loss
 
 Implementation of a framework for fully unsupervised single-view depth estimation as proposed in:
 
-Preprint version: xxx
+Preprint version: (https://arxiv.org/pdf/2201.12170.pdf)
 
 ## Installation
 
@@ -23,7 +23,7 @@ python train.py --direc path_to_project_folder
 ```
 ## Data preparation
 
-RGB images should be given in .jpg-format with dimension **dxdx3**, where the possible values for spatial resolution **d** are multiples of 64 (at least 256). Depth images must be given in .npy-format with dimension **dxdx1**. The evaluation folder should contain some paired samples, where an RGB image is linked by an unique index with its depth counterpart.
+RGB images should be given in .jpg-format with dimension **d**x**d**x**3**, where the possible values for spatial resolution **d** should be in {256,320,384,448,512}. Depth images must be given in .npy-format with dimension **d**x**d**x**1**. The evaluation folder should contain some paired samples, where an RGB image is linked by an unique index with its depth counterpart.
 
 ```
 ./path_to_project_folder/
