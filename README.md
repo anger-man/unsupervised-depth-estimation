@@ -23,7 +23,7 @@ python train.py --direc path_to_project_folder
 ```
 ## Data preparation
 
-RGB images should be given in .jpg-format with dimension **d**x**d**x**3**, where the possible values for spatial resolution **d** should be in {256,320,384,448,512}. Depth images must be given in .npy-format with dimension **d**x**d**x**1**. The evaluation folder should contain some paired samples, where an RGB image is linked by an unique index with its depth counterpart.
+RGB images should be given in .jpg-format with dimension **d**x**d**x**3**, where the possible values for spatial resolution **d** should be powers of 2 (at least 128). Depth images should be given in .npy-format with dimension **d**x**d**x**1**. The evaluation folder should contain some paired samples, where an RGB image is linked by an unique index with its depth counterpart.
 
 ```
 ./path_to_project_folder/
