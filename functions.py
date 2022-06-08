@@ -243,6 +243,8 @@ def evall(step, generator_CtoD,generator_DtoC,evaluation,name,task,batch_size):
         
     temp = (X1-127.5) / 127.5; 
     preds_B = generator_CtoD.predict(temp, batch_size=2)
+    preds_B = preds_B*.5 + .5
+    X2 = X2*.5 + .5
     preds_A = generator_DtoC.predict(X2, batch_size=2)
     preds_A = (preds_A +1) * 127.5
     metric1 = (np.mean(np.square(X2-preds_B)))**.5
@@ -269,7 +271,7 @@ def evall(step, generator_CtoD,generator_DtoC,evaluation,name,task,batch_size):
     # save plot to file
     filename ='plots/%s_%04d.png' % (name,(step+1))
     fig.tight_layout(pad=.1)
-    fig.suptitle(str('M1 = %.2f, M2 = %.2f' %(metric1,metric2)), color = 'red')
+    fig.suptitle(str('RMSE = %.2f, MAE = %.2f' %(metric1,metric2)), color = 'red')
     plt.savefig( filename,dpi=150)
 
     return(metric1,metric2)
